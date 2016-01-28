@@ -16,6 +16,7 @@
 # along with cf_units.  If not, see <http://www.gnu.org/licenses/>.
 
 from __future__ import (absolute_import, division, print_function)
+from six.moves import (filter, input, map, range, zip)  # noqa
 
 from datetime import datetime
 from fnmatch import fnmatch
@@ -265,11 +266,15 @@ class TestLicenseHeaders(unittest.TestCase):
 
 
 class TestFutureImports(unittest.TestCase):
-    excluded = ()
+    excluded = ('*/_version.py')
 
     future_imports_pattern = re.compile(
         r"^from __future__ import \(absolute_import,\s*division,\s*"
         r"print_function(,\s*unicode_literals)?\)$",
+        flags=re.MULTILINE)
+
+    six_import_pattern = re.compile(
+        r"^from six.moves import \(filter, input, map, range, zip\)  # noqa$",
         flags=re.MULTILINE)
 
     def test_future_imports(self):
@@ -296,6 +301,12 @@ class TestFutureImports(unittest.TestCase):
 
                     if re.search(self.future_imports_pattern, content) is None:
                         print('The file {} has no valid __future__ imports '
+                              'and has not been excluded from the imports '
+                              'test.'.format(full_fname))
+                        failed = True
+
+                    if re.search(self.six_import_pattern, content) is None:
+                        print('The file {} has no valid six import '
                               'and has not been excluded from the imports '
                               'test.'.format(full_fname))
                         failed = True
