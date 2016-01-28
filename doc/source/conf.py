@@ -15,12 +15,10 @@
 import sys
 import os
 
-import cf_units
-
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
-#sys.path.insert(0, os.path.abspath('.'))
+sys.path.insert(0, os.path.abspath('../..'))
 
 # -- General configuration ------------------------------------------------
 
@@ -57,6 +55,8 @@ copyright = 'British Crown Copyright 2015 - 2016, Met Office'
 # |version| and |release|, also used in various other places throughout the
 # built documents.
 #
+
+import cf_units
 current_version = cf_units.__version__
 # The short X.Y version.
 version = current_version.split('+')[0]
