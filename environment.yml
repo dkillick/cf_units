@@ -2,3 +2,4 @@ channels:
     - scitools
 dependencies:
     - udunits2
+    - netcdf4
